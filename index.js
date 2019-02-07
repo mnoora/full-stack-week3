@@ -59,16 +59,23 @@ const generateId = () => {
 app.post('/api/persons', (request, response) => {
     const body = request.body
 
-    if (body.content === undefined) {
+    if (body.name === undefined) {
         return response.status(400).json({ 
-        error: 'content missing' 
+        error: 'name missing' 
+        })
+    }else if (body.number === undefined) {
+        return response.status(400).json({ 
+        error: 'number missing' 
+        })
+    }else if (persons.find(person => person.name.toLowerCase() === body.name.toLowerCase())) {
+        return response.status(400).json({ 
+        error: 'number missing' 
         })
     }
 
     const person = {
-        content: body.content,
-        important: body.important || false,
-        date: new Date(),
+        name: body.name,
+        number: body.number,
         id: generateId(),
     }
 
